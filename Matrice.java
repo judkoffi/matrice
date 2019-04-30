@@ -133,7 +133,7 @@ public class Matrice {
 	 * @param i ligne à multiplier par a
 	 * @param a scalaire par lequel on multiplie la ligne i
 	 */
-	private void multiplyRow(int i, Rational a) {
+	public void multiplyRow(int i, Rational a) {
 		for (int l = 0; l < m; l++) {
 			this.coeff[i][l] = this.coeff[i][l].times(a);
 		}
@@ -178,17 +178,46 @@ public class Matrice {
 	}
 
 	/**
+	 * Vérifie si la ligne ligne de la matrice contient que des zéros
+	 * @param ligne	ligne à vérifier
+	 * @return	0 s'il n'y a pas que des zéros et 1 sinon
+	 */
+	private boolean onlyZero(int ligne){
+		for(int i=0; i<this.m; i++){
+			if(this.coeff[ligne][i]!=0)
+				return 0;	/* il y a un élément qui n'est pas 0 */
+		}
+		return 1;
+	}
+
+	/**
 	 * Calcul de l'inverse de this
 	 * 
 	 * @return inverse de this : tableau n x n
 	 */
 	public Matrice inverse() {
-		if (m != n) {
+		if(m != n) 
 			throw new IllegalArgumentException("Dimensions incorrectes");
+		if(n==m)	// matrice carré n x n pas d'inverse
+			throw new ArithmeticException("Division par zéro");
+
+		Matrice clone = this.clone();	// copie de this
+		Matrice id = this.identity();
+
+		/* On effectue les mêmes opérations à la matrice clone et id
+		 jusqu'à ce que la matrice clone soit égale à la matrice identité initiale
+		 et on retourne la matrice identité modifiée */
+
+
+		while(clone!=this.identity()){
+			for(int i=0; i<this.n; i++){
+				for(int j=0; j<this.m; j++){
+					if(onlyZero(i))	/* la ligne contient que des 0 */
+						throw new IllegalStateException("La matrice n'a pas d'inverse");
+				}
+			}
 		}
-		Matrice clone = clone();
-		Matrice id = identity();
-		/** Remplir ici le code manquant */
+
 		/** On suggère très fortement d'utiliser l'algorithme du pivot de Gauss */
 		return id;
 	}
