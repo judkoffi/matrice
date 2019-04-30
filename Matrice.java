@@ -42,7 +42,7 @@ public class Matrice {
 	 * @return somme this + M : tableau n x m
 	 */
 	public Matrice plus(Matrice M) {
-		if (n != M.n || m != M.m) {
+		if (this.n != M.n || this.m != M.m) {
 			throw new IllegalArgumentException("Dimensions incorrectes");
 		}
 
@@ -101,7 +101,10 @@ public class Matrice {
 	 * @param i première ligne à échanger
 	 * @param j deuxième ligne à échanger
 	 */
-	private void swapRows(int i, int j) {
+	public void swapRows(int i, int j) {
+		if (i>n || j>n || i<0 || j<0) 
+			throw new IllegalArgumentException("La matrice ne possède pas ces lignes");
+
 		for (int l = 0; l < m; l++) {
 			Rational tmp = this.coeff[j][l];
 			this.coeff[j][l] = this.coeff[i][l];
@@ -117,7 +120,11 @@ public class Matrice {
 	 * @param a scalaire par lequel on multiplie la ligne i quand on l'ajoute
 	 */
 	private void transvection(int i, int j, Rational a) {
-		/** Remplir ici le code manquant */
+		if (i>n || j>n || i<0 || j<0) 
+			throw new IllegalArgumentException("La matrice ne possède pas ces lignes");
+		for (int c = 0; c <m; c++) {	// parcours les colonnes
+			this.coeff[j][c]= this.coeff[j][c].plus(this.coeff[i][c].times(a));
+		}
 	}
 
 	/**
