@@ -180,14 +180,14 @@ public class Matrice {
 	/**
 	 * Vérifie si la ligne ligne de la matrice contient que des zéros
 	 * @param ligne	ligne à vérifier
-	 * @return	0 s'il n'y a pas que des zéros et 1 sinon
+	 * @return	false s'il n'y a pas que des zéros et true sinon
 	 */
 	private boolean onlyZero(int ligne){
 		for(int i=0; i<this.m; i++){
-			if(this.coeff[ligne][i]!=0)
-				return 0;	/* il y a un élément qui n'est pas 0 */
+			if(this.coeff[ligne][i]!=Rational.ZERO)
+				return false;	/* il y a un élément qui n'est pas 0 */
 		}
-		return 1;
+		return true;
 	}
 
 	/**
