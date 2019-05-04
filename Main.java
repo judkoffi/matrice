@@ -2,18 +2,18 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Matrice A = new Matrice(new long[][] { { 1, 2, 3, 4 }, { 1, 2, 3, 4 }, { 5, 1, 2, 3 } });
+		Matrice A = new Matrice(new long[][] { { 2, -1, 0 }, { -1, 2, -1 }, { 0, -1, 2 } });
 		System.out.println("A= "+A);
-
+		A.inverse();
+		/*
 		Rational t= new Rational(2);
 		/* test transvection =>OK
 		A.transvection(0, 1, t);
 		System.out.println("A= "+A);
-		*/
+		*
 		A.multiplyRow(0, t);
 		System.out.println("A= "+A);
 		Matrice B = A.times(A.transpose());
-		Matrice C = B.inverse();
 		System.out.println(C);
 		Matrice D = A.transpose().times(A);
 		try {

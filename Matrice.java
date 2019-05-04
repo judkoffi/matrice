@@ -177,6 +177,7 @@ public class Matrice {
 		return new Matrice(clone);
 	}
 
+	/*********************** Exercice 9 **********************/
 	/**
 	 * Vérifie si la ligne ligne de la matrice contient que des zéros
 	 * @param ligne	ligne à vérifier
@@ -190,6 +191,44 @@ public class Matrice {
 		return true;
 	}
 
+	private Matrice divideRow(int ligne, Rational div){
+		Matrice m= this.clone();
+		for(int j=0; j<this.m; j++){
+			m.coeff[ligne][j]= m.coeff[ligne][j].divide(div);
+		}
+		return m;
+	}
+
+	/**
+	 * Retourne la ligne qui contient l'élément maximum de la colonne c dans la matrice m
+	 * @param ligne ligne à partir de laquelle on parcour la matrice
+	 * @param colonne colonne à parcourir
+	 * @return
+	 */
+	private int maxRow(int ligne, int colonne){
+		int ligneMax=ligne;
+		Rational max=Rational.ZERO;
+		for(int i=ligne; i<this.n; i++){	// lignes
+			if(max.less(this.coeff[i][colonne])){
+				max= this.coeff[i][colonne];
+				ligneMax= i;
+			}
+		}
+		return ligneMax;
+	}
+
+	private Matrice minusRow(int toChange, int ligne, Rational minus){
+		System.out.println("Multilpie la ligne "+ligne+" par "+minus);
+		Matrice m= this.clone();
+		Matrice m2= this.clone();
+		m2.multiplyRow(ligne, minus);
+		for(int j=0; j<this.m; j++){
+			m.coeff[toChange][j]= m.coeff[toChange][j].minus(m2.coeff[ligne][j]);
+		}
+		return m;
+	}
+
+
 	/**
 	 * Calcul de l'inverse de this
 	 * 
@@ -198,25 +237,61 @@ public class Matrice {
 	public Matrice inverse() {
 		if(m != n) 
 			throw new IllegalArgumentException("Dimensions incorrectes");
-		if(n==m)	// matrice carré n x n pas d'inverse
-			throw new ArithmeticException("Division par zéro");
-
+		
 		Matrice clone = this.clone();	// copie de this
 		Matrice id = this.identity();
 
+		
 		/* On effectue les mêmes opérations à la matrice clone et id
-		 jusqu'à ce que la matrice clone soit égale à la matrice identité initiale
-		 et on retourne la matrice identité modifiée */
-
-
+		jusqu'à ce que la matrice clone soit égale à la matrice identité initiale
+		et on retourne la matrice identité modifiée */
+		
+		/*
 		while(clone!=this.identity()){
 			for(int i=0; i<this.n; i++){
 				for(int j=0; j<this.m; j++){
-					if(onlyZero(i))	/* la ligne contient que des 0 */
-						throw new IllegalStateException("La matrice n'a pas d'inverse");
+					if(onlyZero(i))	// la ligne contient que des 0 
+					throw new ArithmeticException("Division par zéro"); // matrice carré n x n pas d'inverse
 				}
 			}
 		}
+		
+		*/
+		
+		int r=-1;	// indice de la ligne de pivot 
+		Rational max;
+		int k;
+		Matrice modifie= this.clone();
+		for(int j=0; j<this.m; j++){	// pour toutes les colonnes
+			k= modifie.maxRow(r+1, j);
+			max= modifie.coeff[k][j];
+			System.out.println("Le maximum de la colonne "+ j+ " est : "+max);
+			r++;
+			System.out.println("La future ligne de pivot est : "+r);
+			modifie= modifie.divideRow(k,max);
+			System.out.println("Après Division de la ligne "+ k+ " par "+max);
+			System.out.println(modifie);
+
+			if(k!=r){
+				modifie.swapRows(k, r);
+				System.out.println("Après échanges des lignes "+k+" et "+r);
+				System.out.println(modifie);
+
+			}
+
+			for(int i=0; i<modifie.n; i++){
+				if(i!=r){
+					modifie= modifie.minusRow(i, r, modifie.coeff[i][j]);
+					System.out.println("Après soustraction de la ligne "+ i+" la ligne "+j);
+					System.out.println(modifie);
+				}
+			}
+
+		}
+
+		System.out.println("La matrice idéntité a été rerouvé !");
+		System.out.println(modifie);
+		
 
 		/** On suggère très fortement d'utiliser l'algorithme du pivot de Gauss */
 		return id;
@@ -228,3 +303,4 @@ public class Matrice {
 	}
 
 }
+

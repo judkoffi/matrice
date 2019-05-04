@@ -62,6 +62,16 @@ public class Rational {
 		return new Rational(p * r.q + q * r.p, q * r.q);
 	}
 
+
+	public boolean less(Rational r2){
+		float f= this.p / this.q;
+		float f2= r2.p / r2.q;
+		if(f<f2)
+			return true;
+		else
+			return false;
+	}
+
 	/**
 	 * Calcul du rationnel - r
 	 * 
