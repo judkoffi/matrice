@@ -191,6 +191,12 @@ public class Matrice {
 		return true;
 	}
 
+	/**
+	 * Divise une ligne d'une matrice par un Rational
+	 * @param ligne ligne à diviser
+	 * @param div	Rational 
+	 * @return	nouvelle matrice
+	 */
 	private Matrice divideRow(int ligne, Rational div){
 		Matrice m= this.clone();
 		for(int j=0; j<this.m; j++){
@@ -217,11 +223,19 @@ public class Matrice {
 		return ligneMax;
 	}
 
-	private Matrice minusRow(int toChange, int ligne, Rational minus){
-		System.out.println("Multilpie la ligne "+ligne+" par "+minus);
+	/**
+	 * Soustrait la ligne toChange de la matrice this par 
+	 * la ligne ligne qui est précédement multiplié par le Rational minus
+	 * @param toChange indice de la ligne a modifier
+	 * @param ligne	indice de la ligne dont on va soustraire les valeurs de la ligne a modifier
+	 * @param ra Rational valeur qu'on va soustraire
+	 * @return
+	 */
+	private Matrice minusRow(int toChange, int ligne, Rational ra){
+		System.out.println("Multilpie la ligne "+ligne+" par "+ra);
 		Matrice m= this.clone();
 		Matrice m2= this.clone();
-		m2.multiplyRow(ligne, minus);
+		m2.multiplyRow(ligne, ra);
 		for(int j=0; j<this.m; j++){
 			m.coeff[toChange][j]= m.coeff[toChange][j].minus(m2.coeff[ligne][j]);
 		}
@@ -259,8 +273,8 @@ public class Matrice {
 		*/
 		
 		int r=-1;	// indice de la ligne de pivot 
-		Rational max;
-		int k;
+		Rational max;	// maxmim d'une colonne
+		int k;	// ligne qui contient le maximum
 		Matrice modifie= this.clone();
 		for(int j=0; j<this.m; j++){	// pour toutes les colonnes
 			k= modifie.maxRow(r+1, j);

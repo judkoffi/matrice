@@ -62,7 +62,11 @@ public class Rational {
 		return new Rational(p * r.q + q * r.p, q * r.q);
 	}
 
-
+	/**
+	 * Compare this et r2
+	 * @param r2 ratinal a comparer
+	 * @return 1 si this < r2, 0 si r2 > this
+	 */
 	public boolean less(Rational r2){
 		float f= this.p / this.q;
 		float f2= r2.p / r2.q;
