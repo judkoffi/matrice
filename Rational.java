@@ -32,7 +32,7 @@ public class Rational {
 	 * @param a numérateur
 	 * @param b dénominateur
 	 */
-	private Rational(long a, long b) {
+	public Rational(long a, long b) {
 		long d = PGCD(a, b);
 		p = a / d;
 		q = b / d;

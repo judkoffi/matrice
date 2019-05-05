@@ -72,7 +72,7 @@ public class Matrice {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < p; j++) {
 				prod[i][j] = Rational.ZERO;
-				for (int k = 0; k < p; k++) {
+				for (int k = 0; k < m; k++) {
 					prod[i][j] = prod[i][j].plus(this.coeff[i][k].times(M.coeff[k][j]));
 				}
 			}
@@ -231,7 +231,7 @@ public class Matrice {
 	 * @param ra Rational valeur que l'on va multiplié à la ligne d'indice ligne
 	 */
 	private Matrice minusRow(int toChange, int ligne, Rational ra){
-		System.out.println("Multilpie la ligne "+ligne+" par "+ra);
+		//System.out.println("Multilpie la ligne "+ligne+" par "+ra);
 		Matrice m= this.clone();
 		Matrice m2= this.clone();
 		m2.multiplyRow(ligne, ra);
@@ -253,9 +253,6 @@ public class Matrice {
 			
 		Matrice clone = this.clone();	// copie de this
 		Matrice id = this.identity();
-			
-		System.out.println("Matrice initial : "+clone);
-		System.out.println("Matrice identité : "+id);
 		
 		int r=-1;	// indice de la ligne de pivot (commence à -1 car -1+1= 0= numéro de la première ligne de la matrice)
 		Rational max;	// maximum d'une colonne
@@ -263,19 +260,13 @@ public class Matrice {
 		for(int j=0; j<this.m; j++){	// pour toutes les colonnes
 			k= clone.maxRow(r+1, j);	// récupère l'indice de la ligne qui contient le maximum de la colonne j
 			max= clone.coeff[k][j];	// récupère le maximum de la colonne
-			System.out.println("Le maximum de la colonne "+ j+ " est : "+max);
 			r++;	// augmente d'un cran la future ligne pivot
-			System.out.println("La future ligne de pivot est : "+r);
 			clone= clone.divideRow(k,max);	// divise la ligne qui contient le maximum de la colonne j par le maximum
 			id= id.divideRow(k, max); // effectue la même opération pour la matrice identité
-			System.out.println("Après Division de la ligne "+ k+ " par "+max);
-			System.out.println(id);
 			
 			if(k!=r){	// si la ligne pivot n'est pas la même que celle qui contient le maximum de la colonne j
 			clone.swapRows(k, r);	// on inverse les lignes
 			id.swapRows(k, r); // effectue la même opération pour la matrice identité
-				System.out.println("Après échanges des lignes "+k+" et "+r);
-				System.out.println(id);
 			}
 			
 			for(int i=0; i<clone.n; i++){	// pour chaque lignes
@@ -285,17 +276,9 @@ public class Matrice {
 				Rational coeff= clone.coeff[i][j];
 					clone= clone.minusRow(i, r, coeff);	// on soustrait à la ligne parcouru la ligne pivot elle-même multiplié par coeff
 					id= id.minusRow(i, r, coeff); // effectue la même opération pour la matrice identité
-					System.out.println("Après soustraction de la ligne "+ i+" la ligne "+j);
-					System.out.println(id);
 				}
 			}
 		}
-
-		System.out.println("La matrice identité a été rerouvé !");
-		System.out.println(clone);
-		System.out.println("La matrice inverse a été rerouvé !");
-		System.out.println(id);
-		
 		return id;
 	}
 

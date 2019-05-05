@@ -1,0 +1,51 @@
+MATHS DM 2
+Mélissa DA COSTA
+Judicaël KOFFI
+
+
+- Exercice 1 :
+
+Le problème que nous avons trouvé peut se décrire par l'énoncé suivant :
+Un cycliste s’entraîne chaque dimanche en faisant l’aller-retour d’Issy à Labat.
+Le trajet Issy-Labat n’est pas horizontal : il y a des montées, des descentes et du plat. 
+En montée, notre cycliste fait du quinze kilomètres à l’heure, sur le plat du vingt, en descente du trente.
+L’aller lui prend deux heures et le retour trois.
+Un autre cycliste, plus sportif, fait du vingt kilomètres à l’heure en montée, trente en plat et quarante en descente. 
+Sachant que l’aller-retour Issy-Labat lui prend seulement trois heures quarante.
+Déterminer les trois longueurs : de la partie du trajet qui monte, de celle qui descend, de celle qui est à plat.
+
+
+Source : http://caseine.org/pluginfile.php/3763/mod_resource/content/34/1A-giem-outils.pdf
+
+- Exercice 10 :
+
+
+- Exercice 11 :
+
+Pour résoudre notre problème de l'exercice 1, nous avons procédé comme suit :
+Prenons x la distance en montée (à l’aller), y la distance plate et z la distance en descente (à l’aller). 
+On peut trouver 3 équations, 2 pour le premier cycliste (1 allée et 1 retour) et 1 pour le second.
+On a pour le premier cycliste :
+x/15 +y/20 +z/30 = 2 (temps à l’aller)
+et x/30 +y/20 +z/15 = 3 (temps au retour)
+
+Puis pour le deuxième cycliste :
+x/20 +y/30 +z/40 +x/40 +y/30 +z/20 = 11/3
+
+On peut ré-écrire ces 3 équations : (on multiple par 30) :
+2x+ 3y/2 +z= 60
+et x+ 3y/2 + 2z= 90
+et 9x/4 + 2y+ 9z/4 = 110.
+
+
+Ce qui nous donne le système matriciel suivant :
+
+I= { { 2, 3/2, 1}, {1, 3/2, 2}, {9/4, 2, 9/4} }
+et J= { {60}, {90}, {110} }
+
+Pour résoudre ce système, il faut multiplier l'inverse de A par la matrice B.
+Ce qui nous donne la matrice K= { {5}, {10}, {35} } 
+
+Donc x= 5, y= 10 et z=35.
+Ce qui signifie, pour répondre à l'énoncé qu'il y a 5 km de montée, 10 de plat et 35km de descente pour aller de Issy jusqu'à Labat.
+
