@@ -1,6 +1,10 @@
-MATHS DM 2
+﻿MATHS DM 2
 Mélissa DA COSTA
 Judicaël KOFFI
+
+Nous avons apporté quelque modification sur le fichier Rational.java pour qu'il s'adapte à nos besoin.
+Comme mettre en public le constructeur Rational(long a, long b) pour pouvoir l'appelé dans le Main.
+Nous avons rajouté aussi la fonction less qui permet de comparer deux Rational.
 
 
 - Exercice 1 :
@@ -16,6 +20,7 @@ Déterminer les trois longueurs : de la partie du trajet qui monte, de celle qui
 
 
 Source : http://caseine.org/pluginfile.php/3763/mod_resource/content/34/1A-giem-outils.pdf
+
 
 - Exercice 10 :
 
