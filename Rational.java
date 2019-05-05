@@ -53,6 +53,17 @@ public class Rational {
 	}
 
 	/**
+	 * Compare this and r2
+	 * @param r2 rational a comparer
+	 * @return true si this < r2, false sinon
+ 	 */
+	public boolean less(Rational r2) {
+        float f = this.p / this.q;
+        float f2 = r2.p / r2.q;
+        return f < f2;
+	}
+	
+	/**
 	 * Calcul du rationnel this + r
 	 * 
 	 * @param r rationnel à ajouter
@@ -60,20 +71,6 @@ public class Rational {
 	 */
 	public Rational plus(Rational r) {
 		return new Rational(p * r.q + q * r.p, q * r.q);
-	}
-
-	/**
-	 * Compare this et r2
-	 * @param r2 ratinal a comparer
-	 * @return 1 si this < r2, 0 si r2 > this
-	 */
-	public boolean less(Rational r2){
-		float f= this.p / this.q;
-		float f2= r2.p / r2.q;
-		if(f<f2)
-			return true;
-		else
-			return false;
 	}
 
 	/**

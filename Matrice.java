@@ -226,10 +226,9 @@ public class Matrice {
 	/**
 	 * Soustrait la ligne toChange de la matrice this par 
 	 * la ligne ligne qui est précédement multiplié par le Rational minus
-	 * @param toChange indice de la ligne a modifier
-	 * @param ligne	indice de la ligne dont on va soustraire les valeurs de la ligne a modifier
-	 * @param ra Rational valeur qu'on va soustraire
-	 * @return
+	 * @param toChange indice de la ligne a cloner
+	 * @param ligne	indice de la ligne dont on va soustraire les valeurs de la ligne a cloner
+	 * @param ra Rational valeur que l'on va multiplié à la ligne d'indice ligne
 	 */
 	private Matrice minusRow(int toChange, int ligne, Rational ra){
 		System.out.println("Multilpie la ligne "+ligne+" par "+ra);
@@ -251,63 +250,52 @@ public class Matrice {
 	public Matrice inverse() {
 		if(m != n) 
 			throw new IllegalArgumentException("Dimensions incorrectes");
-		
+			
 		Matrice clone = this.clone();	// copie de this
 		Matrice id = this.identity();
-
+			
+		System.out.println("Matrice initial : "+clone);
+		System.out.println("Matrice identité : "+id);
 		
-		/* On effectue les mêmes opérations à la matrice clone et id
-		jusqu'à ce que la matrice clone soit égale à la matrice identité initiale
-		et on retourne la matrice identité modifiée */
-		
-		/*
-		while(clone!=this.identity()){
-			for(int i=0; i<this.n; i++){
-				for(int j=0; j<this.m; j++){
-					if(onlyZero(i))	// la ligne contient que des 0 
-					throw new ArithmeticException("Division par zéro"); // matrice carré n x n pas d'inverse
-				}
-			}
-		}
-		
-		*/
-		
-		int r=-1;	// indice de la ligne de pivot 
-		Rational max;	// maxmim d'une colonne
+		int r=-1;	// indice de la ligne de pivot (commence à -1 car -1+1= 0= numéro de la première ligne de la matrice)
+		Rational max;	// maximum d'une colonne
 		int k;	// ligne qui contient le maximum
-		Matrice modifie= this.clone();
 		for(int j=0; j<this.m; j++){	// pour toutes les colonnes
-			k= modifie.maxRow(r+1, j);
-			max= modifie.coeff[k][j];
+			k= clone.maxRow(r+1, j);	// récupère l'indice de la ligne qui contient le maximum de la colonne j
+			max= clone.coeff[k][j];	// récupère le maximum de la colonne
 			System.out.println("Le maximum de la colonne "+ j+ " est : "+max);
-			r++;
+			r++;	// augmente d'un cran la future ligne pivot
 			System.out.println("La future ligne de pivot est : "+r);
-			modifie= modifie.divideRow(k,max);
+			clone= clone.divideRow(k,max);	// divise la ligne qui contient le maximum de la colonne j par le maximum
+			id= id.divideRow(k, max); // effectue la même opération pour la matrice identité
 			System.out.println("Après Division de la ligne "+ k+ " par "+max);
-			System.out.println(modifie);
-
-			if(k!=r){
-				modifie.swapRows(k, r);
+			System.out.println(id);
+			
+			if(k!=r){	// si la ligne pivot n'est pas la même que celle qui contient le maximum de la colonne j
+			clone.swapRows(k, r);	// on inverse les lignes
+			id.swapRows(k, r); // effectue la même opération pour la matrice identité
 				System.out.println("Après échanges des lignes "+k+" et "+r);
-				System.out.println(modifie);
-
+				System.out.println(id);
 			}
-
-			for(int i=0; i<modifie.n; i++){
-				if(i!=r){
-					modifie= modifie.minusRow(i, r, modifie.coeff[i][j]);
+			
+			for(int i=0; i<clone.n; i++){	// pour chaque lignes
+				if(onlyZero(i))	// la ligne contient que des 0 
+					throw new ArithmeticException("Division par zéro"); // matrice carré n x n pas d'inverse
+				if(i!=r){	// si la ligne n'est pas la ligne pivot
+				Rational coeff= clone.coeff[i][j];
+					clone= clone.minusRow(i, r, coeff);	// on soustrait à la ligne parcouru la ligne pivot elle-même multiplié par coeff
+					id= id.minusRow(i, r, coeff); // effectue la même opération pour la matrice identité
 					System.out.println("Après soustraction de la ligne "+ i+" la ligne "+j);
-					System.out.println(modifie);
+					System.out.println(id);
 				}
 			}
-
 		}
 
-		System.out.println("La matrice idéntité a été rerouvé !");
-		System.out.println(modifie);
+		System.out.println("La matrice identité a été rerouvé !");
+		System.out.println(clone);
+		System.out.println("La matrice inverse a été rerouvé !");
+		System.out.println(id);
 		
-
-		/** On suggère très fortement d'utiliser l'algorithme du pivot de Gauss */
 		return id;
 	}
 
